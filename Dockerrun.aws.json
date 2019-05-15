@@ -27,7 +27,7 @@
       "image": "lionvnam/multi-nginx",
       "essential": true,
       "memory": 128,
-      "portsMapping": [
+      "portMapping": [
         {
           "hostPort": 80,
           "containerPort": 80

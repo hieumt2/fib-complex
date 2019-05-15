@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t lionvnam/fib-complex-fe-test -f ./client/Dockerfile.dev ./client
+script:
+  - docker run lionvnam/fib-complex-fe-test npm run test
+
+after_success:
+  - docker build -t lionvnam/multi-client ./client
+  - docker build -t lionvnam/multi-nginx ./nginx
+  - docker build -t lionvnam/multi-server ./server
+  - docker build -t lionvnam/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push lionvnam/multi-client
+  - docker push lionvnam/multi-nginx 
+  - docker push lionvnam/multi-server
+  - docker push lionvnam/multi-worker
+
+
+
